@@ -9,6 +9,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: .
       - uses: actions/download-artifact@v3
         with: 
           name: release
@@ -18,5 +23,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           title: "release"
-          files: |
-            *
+          files: release
