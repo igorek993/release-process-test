@@ -19,4 +19,4 @@ jobs:
           automatic_release_tag: "latest"
           title: "release"
           files: |
-            *
+            * 
