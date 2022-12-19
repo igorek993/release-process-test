@@ -12,7 +12,8 @@ jobs:
       - uses: actions/download-artifact@v3
         with: 
           name: release
-           path: .
+           path: |
+              .
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
