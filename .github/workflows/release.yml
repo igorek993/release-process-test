@@ -11,8 +11,9 @@ jobs:
     needs: [build, terraform]
     steps:
       - uses: actions/download-artifact@v3
-        with:
+        with: 
           name: release
+           path: .
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
