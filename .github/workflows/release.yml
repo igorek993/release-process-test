@@ -14,8 +14,9 @@ jobs:
         with:
           name: release
           path: .
-      - name: Get latest release
-        run: curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/releases/latest
+      - name: Get latest release title
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest
       - name: Extract title
         run: jq .title
       - name: Save output to environment variable
