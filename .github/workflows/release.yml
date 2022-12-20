@@ -16,7 +16,7 @@ jobs:
           path: .
       - name: Get latest release title
         run: |
-          TITLE=curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest | jq .name
+          TITLE=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest | jq .name)
           echo $TITLE
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
