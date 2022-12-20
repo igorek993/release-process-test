@@ -18,16 +18,16 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: igorek993/release-process-test
-      - id: compare_versions
-        run: |
-            LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
-            echo $LATEST_VERSION
-      # - uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     automatic_release_tag: "latest"
-      #     title: "release"
-      #     files: release
+      # - id: compare_versions
+      #   run: |
+      #       LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
+      #       echo $LATEST_VERSION
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: 1.0.11
+          title: latest
+          files: release
 
 # name: release
 
