@@ -36,10 +36,15 @@ jobs:
         with:
           name: release
       - id: get_latest_version
-        uses: actions/get-latest-release@v2
+        uses: actions/github-script@0.5.0
         with:
-          repository: "igorek993/release-process-test"
-          access_token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            const latestRelease = await github.repos.getLatestRelease({
+              owner: "marvinpinto",
+              repo: "action-automatic-releases"
+            });
+            console.log(latestRelease.data.tag_name);
       - id: compare_versions
         run: |
           # Get the current version from the branch name
@@ -49,7 +54,7 @@ jobs:
           echo $CURRENT_VERSION
           echo HERE2
           # Get the latest version from the output of the get-latest-release action
-          LATEST_VERSION=$(jq -r '.version' <<< "${{ steps.get_latest_version.outputs }}")
+          LATEST_VERSION=$(cat "$GITHUB_ENV" | jq -r '.tag_name')
           echo "$LATEST_VERSION"
           echo HERE3
           # Check if the current version is higher than the latest version
