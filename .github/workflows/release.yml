@@ -54,6 +54,7 @@ jobs:
           LATEST_VERSION=8.0.0
           echo "$LATEST_VERSION"
           echo HERE3
+          NEW_TAG="latest"
           # Check if the current version is higher than the latest version
           # if [[ "$CURRENT_VERSION" > "$LATEST_VERSION" ]]; then
           #   # Tag the new release with the latest version
@@ -68,7 +69,7 @@ jobs:
         # if: steps.compare_versions.outputs.NEW_TAG == 'latest'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: latest
+          automatic_release_tag: "${{ steps.compare_versions.outputs.NEW_TAG }}"
           title: "${{ steps.compare_versions.outputs.CURRENT_VERSION }}"
           prerelease: false
           files: release
