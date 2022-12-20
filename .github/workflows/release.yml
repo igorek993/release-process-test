@@ -32,9 +32,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: release
+          path: .
       - id: get_latest_version
         uses: actions/github-script@0.5.0
         with:
@@ -71,5 +73,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ steps.compare_versions.outputs.NEW_TAG }}"
           title: "release"
-          files: |
-            * 
+          files: release
