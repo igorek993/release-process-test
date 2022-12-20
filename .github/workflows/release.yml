@@ -50,21 +50,23 @@ jobs:
           echo $CURRENT_VERSION
           echo HERE2
           # Get the latest version from the output of the get-latest-release action
-          LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
+          # LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
+          LATEST_VERSION=8
           echo "$LATEST_VERSION"
           echo HERE3
           # Check if the current version is higher than the latest version
           if [[ "$CURRENT_VERSION" > "$LATEST_VERSION" ]]; then
             # Tag the new release with the latest version
             NEW_TAG="latest"
+            TITLE=$CURRENT_VERSION
           else
             # Don't tag the new release
             NEW_TAG=""
           fi
       - uses: "marvinpinto/action-automatic-releases@latest"
-        if: steps.compare_versions.outputs.NEW_TAG == 'latest'
+        # if: steps.compare_versions.outputs.NEW_TAG == 'latest'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ steps.compare_versions.outputs.NEW_TAG }}"
-          title: "release"
+          title: "${{ steps.compare_versions.outputs.TITLE }}"
           files: release
