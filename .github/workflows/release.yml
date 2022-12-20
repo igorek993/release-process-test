@@ -29,12 +29,12 @@ jobs:
             echo "UPDATE=false" >> $GITHUB_ENV
           fi
       - uses: "marvinpinto/action-automatic-releases@latest"
-        if: steps.get_latest_release_title.outputs.UPDATE == 'true'
+        if: ${{ env.UPDATE }} == 'true'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           automatic_release_tag: latest
-          title: "${{ steps.get_latest_release_title.outputs.NEW_VERSION }}"
+          title: ${{ env.NEW_VERSION }}
           files: release
 
 # name: release
