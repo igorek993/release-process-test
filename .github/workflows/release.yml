@@ -57,6 +57,7 @@ jobs:
           # Check if the current version is higher than the latest version
           if [[ "$CURRENT_VERSION" > "$LATEST_VERSION" ]]; then
             # Tag the new release with the latest version
+            echo HERE4
             NEW_TAG="latest"
             TITLE=$CURRENT_VERSION
           else
