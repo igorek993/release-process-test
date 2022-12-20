@@ -16,15 +16,7 @@ jobs:
           path: .
       - name: Get latest release title
         run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest
-      - name: Extract title
-        run: jq .title
-      - name: Save output to environment variable
-        run: export TITLE="$(jq .title)"
-      - id: compare_versions
-        run: |
-            echo $TITLE
-            echo HERE2
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest | jq .name
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
       #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
