@@ -1,3 +1,26 @@
+# name: release
+
+# on:
+#   push:
+#     branches:
+#       - release/*
+
+# jobs:
+#   release:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: release
+#           path: .
+#       - uses: "marvinpinto/action-automatic-releases@latest"
+#         with:
+#           repo_token: "${{ secrets.GITHUB_TOKEN }}"
+#           automatic_release_tag: "latest"
+#           title: "release"
+#           files: release
+
 name: release
 
 on:
@@ -9,14 +32,39 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/upload-artifact@v3
+      - uses: actions/download-artifact@v3
         with:
           name: release
-          path: .
+      - id: get_latest_version
+        uses: actions/get-latest-release@v1
+        with:
+          repository: "igorek993/release-process-test"
+          access_token: "${{ secrets.GITHUB_TOKEN }}"
+      - id: compare_versions
+        run: |
+          # Get the current version from the branch name
+          CURRENT_VERSION=$(echo "$GITHUB_REF" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
+          echo $GITHUB_REF
+          echo HERE
+          echo $CURRENT_VERSION
+          echo HERE2
+          # Get the latest version from the output of the get-latest-release action
+          LATEST_VERSION=$(jq -r '.version' <<< "${{ steps.get_latest_version.outputs }}")
+          echo "$LATEST_VERSION"
+          echo HERE3
+          # Check if the current version is higher than the latest version
+          if [[ "$CURRENT_VERSION" > "$LATEST_VERSION" ]]; then
+            # Tag the new release with the latest version
+            NEW_TAG="latest"
+          else
+            # Don't tag the new release
+            NEW_TAG=""
+          fi
       - uses: "marvinpinto/action-automatic-releases@latest"
+        if: steps.compare_versions.outputs.NEW_TAG == 'latest'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "${{ steps.compare_versions.outputs.NEW_TAG }}"
           title: "release"
-          files: release
+          files: |
+            * 
