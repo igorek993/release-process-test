@@ -19,9 +19,9 @@ jobs:
         with:
           repository: igorek993/release-process-test
       - id: compare_versions
-          run: |
-              LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
-              echo $LATEST_VERSION
+        run: |
+            LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
+            echo $LATEST_VERSION
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
       #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
