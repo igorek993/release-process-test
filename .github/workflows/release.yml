@@ -20,6 +20,11 @@ jobs:
           echo $CURRENT_VERSION
           NEW_VERSION=$(echo "$GITHUB_REF" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
           echo $NEW_VERSION
+          if [[ $(sort -V <<<"$CURRENT_VERSION $NEW_VERSION") == "$CURRENT_VERSION $NEW_VERSION" ]]; then
+            echo "$CURRENT_VERSION is less than $NEW_VERSION"
+          else
+            echo "$CURRENT_VERSION is greater than or equal to $NEW_VERSION"
+          fi
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
       #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
