@@ -51,7 +51,7 @@ jobs:
           echo HERE2
           # Get the latest version from the output of the get-latest-release action
           # LATEST_VERSION=${{ steps.latest_release_version.outputs.release }}
-          LATEST_VERSION=8
+          LATEST_VERSION=8.0.0
           echo "$LATEST_VERSION"
           echo HERE3
           # Check if the current version is higher than the latest version
