@@ -28,8 +28,13 @@ jobs:
             echo "$CURRENT_VERSION is greater than or equal to $NEW_VERSION"
             echo "UPDATE=false" >> $GITHUB_ENV
           fi
+      - name: test
+        run: |
+          echo env.UPDATE
+          echo env.NEW_VERSION
+          echo env.CURRENT_VERSION
       - uses: "marvinpinto/action-automatic-releases@latest"
-        if: ${{ env.UPDATE }} == 'true'
+        if: ${{ env.UPDATE }}=='true'
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
