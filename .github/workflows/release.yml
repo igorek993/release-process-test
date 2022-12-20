@@ -42,7 +42,7 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           script: |
-            const latestRelease = await github.repos.getLatestRelease({
+            const latestRelease = github.repos.getLatestRelease({
               owner: "marvinpinto",
               repo: "action-automatic-releases"
             });
