@@ -69,5 +69,6 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: latest
-          title: 1.0.7
+          title: 1.0.8
+          prerelease: false
           files: release
