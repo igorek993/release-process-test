@@ -34,6 +34,5 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           automatic_release_tag: latest
-          keep_existing: true
           title: ${{ env.NEW_VERSION }}
           files: release
