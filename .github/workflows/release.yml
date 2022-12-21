@@ -14,9 +14,13 @@ jobs:
         with:
           name: release
           path: .
-      - name: Delete the "latest" release tag
-        run: |
-          git tag -d latest
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          tag_name: latest #(required) tag name to delete 
+          delete_release: false #(optional) default: true 
+          repo: igorek993/release-process-test #(optional) target repository. default: repo running this action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: get_latest_release_title
       #   run: |
       #     CURRENT_VERSION=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest | jq .name | sed 's/^"\|"$//g')
