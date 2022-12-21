@@ -34,7 +34,7 @@ jobs:
           echo env.NEW_VERSION
           echo env.CURRENT_VERSION
       - uses: "marvinpinto/action-automatic-releases@latest"
-        if: ${{ env.UPDATE== "true" }}
+        if: ${{ env.UPDATE == "true" }}
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
