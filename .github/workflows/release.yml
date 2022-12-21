@@ -14,25 +14,28 @@ jobs:
         with:
           name: release
           path: .
-      - name: get_latest_release_title
+      - name: Delete the "latest" release tag
         run: |
-          CURRENT_VERSION=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest | jq .name | sed 's/^"\|"$//g')
-          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
-          NEW_VERSION=$(echo "$GITHUB_REF" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo $GITHUB_ENV
-          if dpkg --compare-versions "$CURRENT_VERSION" lt "$NEW_VERSION"; then
-              echo "$CURRENT_VERSION is less than $NEW_VERSION"
-              echo "UPDATE=true" >> $GITHUB_ENV
-          else
-              echo "$CURRENT_VERSION is greater than or equal to $NEW_VERSION"
-              echo "UPDATE=false" >> $GITHUB_ENV
-          fi
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        if: ${{ env.UPDATE == 'true' }}
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          automatic_release_tag: latest
-          title: ${{ env.NEW_VERSION }}
-          files: release
+          git tag -d latest
+      # - name: get_latest_release_title
+      #   run: |
+      #     CURRENT_VERSION=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/igorek993/release-process-test/releases/latest | jq .name | sed 's/^"\|"$//g')
+      #     echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+      #     NEW_VERSION=$(echo "$GITHUB_REF" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
+      #     echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+      #     echo $GITHUB_ENV
+      #     if dpkg --compare-versions "$CURRENT_VERSION" lt "$NEW_VERSION"; then
+      #         echo "$CURRENT_VERSION is less than $NEW_VERSION"
+      #         echo "UPDATE=true" >> $GITHUB_ENV
+      #     else
+      #         echo "$CURRENT_VERSION is greater than or equal to $NEW_VERSION"
+      #         echo "UPDATE=false" >> $GITHUB_ENV
+      #     fi
+      # - uses: "marvinpinto/action-automatic-releases@latest"
+      #   if: ${{ env.UPDATE == 'true' }}
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     prerelease: false
+      #     automatic_release_tag: latest
+      #     title: ${{ env.NEW_VERSION }}
+      #     files: release
